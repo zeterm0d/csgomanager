@@ -1,0 +1,2 @@
+python ManagerCSGO.py build
+
