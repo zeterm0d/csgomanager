@@ -9,14 +9,17 @@ from tkinter import filedialog
 import shutil
 import random
 import os
-
 import logging
+
 logging.basicConfig(filename='logs.log', level=logging.DEBUG, 
                     format='%(asctime)s %(levelname)s %(name)s %(message)s')
 logger=logging.getLogger(__name__)
 
+
+
 try:
-    ggtime = 0
+    ggtime, cctime, bks, stater  = 0, 0, 0, ""
+    
     #Panorama Switcher
     def panoraman():
         flag = ''
@@ -37,78 +40,93 @@ try:
             '''
             def opnr1():
                 global checkform, A, flag2
-                flag2 = True
-                print("Function: opnr1...")
-                A = root.directory = filedialog.askopenfilename()
-                checkform = re.findall(r"\.\S*", A)
-                if checkform[0] != '.webm':
-                    messagebox.showerror("Panorama switcher","Invalid file type. Please chooose .webm file.")
-                    flag2 = False
-                    A = ''
+                try:
+                    flag2 = True
+                    print("Function: opnr1...")
+                    A = root.directory = filedialog.askopenfilename()
+                    checkform = re.findall(r"\.\S*", A)
+                    if checkform[0] != '.webm':
+                        messagebox.showerror("Panorama switcher","Invalid file type. Please chooose .webm file.")
+                        flag2 = False
+                        A = ''
+                except:
+                    pass
+
             def opnr2():
                 print("Function: opnr2...")
                 global checkform, B, flag3
-                flag3 = True
-                B = root.directory = filedialog.askopenfilename()
-                checkform = re.findall(r"\.\S*", B)
-                if checkform[0] != '.webm':
-                    messagebox.showerror("Panorama switcher","Invalid file type. Please chooose .webm file.")
-                    flag3 = False
-                    B = ''
+                try:
+                    flag3 = True
+                    B = root.directory = filedialog.askopenfilename()
+                    checkform = re.findall(r"\.\S*", B)
+                    if checkform[0] != '.webm':
+                        messagebox.showerror("Panorama switcher","Invalid file type. Please chooose .webm file.")
+                        flag3 = False
+                        B = ''
+                except:
+                    pass
+
             def opnr3():
                 print("Function: opnr3...")
                 global checkform, C, flag4
-                flag4 = True
-                C = root.directory = filedialog.askopenfilename()
-                checkform = re.findall(r"\.\S*", C)
-                if checkform[0] != '.webm':
-                    messagebox.showerror("Panorama switcher","Invalid file type. Please chooose .webm file.")
-                    flag4 = False
-                    C = ''
+                try:
+                    flag4 = True
+                    C = root.directory = filedialog.askopenfilename()
+                    checkform = re.findall(r"\.\S*", C)
+                    if checkform[0] != '.webm':
+                        messagebox.showerror("Panorama switcher","Invalid file type. Please chooose .webm file.")
+                        flag4 = False
+                        C = ''
+                except:
+                    pass
+
             def changer():
-                if flag2 == True and flag3 == True and flag4 == True:
-                    print("Function: changer...")
-                    global A,B,C, egetp
-                    if A != '' and B != '' and C != '':
-                        egetp = eget + r'\panorama\videos'
+                try:
+                    if flag2 == True and flag3 == True and flag4 == True:
+                        print("Function: changer...")
+                        global A,B,C, egetp
+                        if A != '' and B != '' and C != '':
+                            egetp = eget + r'\panorama\videos'
 
-                        shutil.copy2(A, egetp)
-                        nameA = re.findall("/\S*\.webm", A)
-                        nameA = nameA[0]
-                        nameA.replace('/', '\\')
-                        os.remove(egetp + r'\sirocco_night.webm')
-                        os.rename(egetp+nameA, egetp + r'\sirocco_night.webm')
+                            shutil.copy2(A, egetp)
+                            nameA = re.findall("/\S*\.webm", A)
+                            nameA = nameA[0]
+                            nameA.replace('/', '\\')
+                            os.remove(egetp + r'\sirocco_night.webm')
+                            os.rename(egetp+nameA, egetp + r'\sirocco_night.webm')
 
-                        shutil.copy2(B, egetp)
-                        nameB = re.findall("/\S*\.webm", B)
-                        nameB = nameB[0]
-                        nameB.replace('/', '\\')
-                        os.remove(egetp + r'\sirocco_night540p.webm')
-                        os.rename(egetp+nameB, egetp + r'\sirocco_night540p.webm')
+                            shutil.copy2(B, egetp)
+                            nameB = re.findall("/\S*\.webm", B)
+                            nameB = nameB[0]
+                            nameB.replace('/', '\\')
+                            os.remove(egetp + r'\sirocco_night540p.webm')
+                            os.rename(egetp+nameB, egetp + r'\sirocco_night540p.webm')
 
-                        shutil.copy2(C, egetp)
-                        nameC = re.findall("/\S*\.webm", C)
-                        nameC = nameC[0]
-                        nameC.replace('/', '\\')
-                        os.remove(egetp + r'\sirocco_night720p.webm')
-                        os.rename(egetp+nameC, egetp + r'\sirocco_night720p.webm')
+                            shutil.copy2(C, egetp)
+                            nameC = re.findall("/\S*\.webm", C)
+                            nameC = nameC[0]
+                            nameC.replace('/', '\\')
+                            os.remove(egetp + r'\sirocco_night720p.webm')
+                            os.rename(egetp+nameC, egetp + r'\sirocco_night720p.webm')
 
-                        messagebox.showinfo("Panorama switcher","Successfully!")
+                            messagebox.showinfo("Panorama switcher","Successfully!")
+                        else:
+                            messagebox.showerror("Panorama switcher", "Please select all three panorama files of correct file type.")
                     else:
-                        messagebox.showerror("Panorama switcher", "Please select all three panorama files of correct file type.")
-                else:
-                    messagebox.showerror("Panorama switcher", "Please select all three panorama files of .webm file type.")
+                        messagebox.showerror("Panorama switcher", "Please select all three panorama files of .webm file type.")
+                except:
+                    messagebox.showerror("Panorama switcher", "Please select all three panorama files of correct file type.")
             def helper():
                 print("Function: helper...")
                 messagebox.showinfo("Panorama switcher",k)
 
             def restores():
-                print("Function: resores...")
+                print("Function: restores...")
                 try:
                     egetp = eget + r'\panorama\videos'
-                    shutil.copy2("sirocco_night.webm", egetp)
-                    shutil.copy2("sirocco_night540p.webm",egetp)
-                    shutil.copy2("sirocco_night720p.webm",egetp)
+                    shutil.copy2("files/sirocco_night.webm", egetp)
+                    shutil.copy2("files/sirocco_night540p.webm",egetp)
+                    shutil.copy2("files/sirocco_night720p.webm",egetp)
                     messagebox.showinfo("Panorama switcher","Successfully restored!")
                 except:
                     FileNotFoundError
@@ -148,56 +166,176 @@ try:
 
             
     def seteget():
-        global eget, flag
+        print("Function seteget...")
+        global eget, flag, ggtime
         flag =  'yes'
         try:
-            open(e2.get() + r'\scripts\items\items_game.txt', 'r')
+            open(e2.get() + r'\scripts\items\items_game.txt')
         except:
             FileNotFoundError
             if FileNotFoundError:
-                messagebox.showerror("CSGO Manager", "CSGO folder not found. Check the path and try again.")
+                messagebox.showerror("CSGO Manager", "Maybe some files of your csgo are broken. Try to restore your csgo files or check the path to your csgo and try again.")
                 flag = 'no'
         if flag != 'no':
             messagebox.showinfo("CSGO Manager", "Path has been set.")
             eget = e2.get()
+            copypath = eget + r'\scripts\items\items_game.txt'
+            if ggtime == 0:
+                shutil.copy2(copypath, r"files/")
+                ggtime +=1
+            
 
 #Widget manager
     def widgetman():
-
+        global onetime
+        onetime = 0
         def sete3get():
+            global ec3get, flagr
             flagr = ''
-            global ec3get
             try:
                 ec3get = ec3.get()
-                print(ec3get)
             except:
                 NameError
                 if NameError:
                     messagebox.showerror("Widget manager", "Please enter what you want to search.")
                     flagr = 'no'
-            if flagr != '':
-                widshow()
+            if flagr != 'no':
+                if ec3get != '':
+                    if len(ec3get) >=3:
+                        widshow()
+                    else:
+                        messagebox.showerror("Widget manager", "The argument is too short. Try word at least with 3 characters.")
+                else:
+                    messagebox.showerror("Widget manager", "You didn't write anything.")
+            
             
         def widshow():
+            global dictiong, keys2, valuess2, btc7, allstrokes, keys2def, valuess2def, combb, cctime,  plus, bks, cs
+            allstrokes = []
+            print("Function widshow..")
+
             plus =  eget + r"\resource" + "\\"
             plus = plus + "csgo_" + lang + '.txt'
-            print(plus)
+
+            plus2 = "files/" + "csgo_" + lang + '.txt'
+            try:
+                open(plus2, "r")
+                print("Widget backup had been already created.")
+                cctime = 1
+            except:
+                pass
+
+            if cctime == 0:
+                shutil.copy2(plus, "files/")
+                print("Widget backup created.")
+                cctime +=1
+            
                 
-            with open(plus, "r", encoding="utf8", errors='ignore') as c:
+            with open(plus, "r", encoding="utf-16") as c:
                 cs = c.readlines()
-                print(cs)
+                dictiong = {}
                 for i in cs:
                     if ec3get in i:
-                        print(i)
+                            keyg = re.search('"\S*"', i)
+                            if keyg:
+                                keyg = keyg[0]
+                                changeg = i[len(keyg)+1:]
+                                mentiong = re.search('"\D*"', changeg)
+                                if mentiong:
+                                    mentiong = mentiong[0]
+                                    allstrokes.append(i)
+                            if mentiong and keyg:
+                                dictiong[keyg] = mentiong
+                if dictiong:
+                    pass
+                else:
+                    messagebox.showerror("Widget manager", "I didn't find anything :(")
+                
+                keys2, valuess2 = [], []
+                for key in dictiong.keys():
+                    keys2.append(key)
+                for value in dictiong.values():
+                    valuess2.append(value)
+
+                    btc7 = ttk.Button(root, text="→", width=2, command=showpar)
+                    btc7.place(x=20, y=48)
+                    combbs.destroy()
+                    combb = ttk.Combobox(root, width=50, values=keys2)
+                    combb.place(x=60,y=50)
+                
+                
+        def widchange():
+            print("Function widchange...")
+            global whrepl, wiwhrepl, realwhrepl, x, creadl, xstr, gkav
+            for i in allstrokes:
+                if keys2[mainnum] in i and valuess2[mainnum] in i:
+                    whrepl = i
+                    
+            otst = re.search('"\S*"', whrepl)
+            otst = otst[0]
+
+            wiwhrepl = re.search('"\D*"', whrepl[len(otst):])
+            wiwhrepl = wiwhrepl[0]
+
+            gkav = gtext.get("1.0", END).replace("\t", "").replace("\n", "")
+            gkav  = '"' + gkav + '"'
+            realwhrepl = whrepl.replace(wiwhrepl, gkav)
 
 
+            with open(plus, "r", encoding="utf16") as c1:
+                creadl = c1.readlines()
+                for i in creadl:
+                    if whrepl in i:
+                        xstr = i.replace("\n", "")
+
+            with open(plus, "w", encoding="utf16") as c2:
+                    for i in creadl:
+                        global valforval
+                        if xstr in i:  
+                            i = realwhrepl
+                            valforval = i
+                        c2.write(i)
+                    messagebox.showinfo("Widget manager", "Sucessfully changed!")
+            
+            for i in valuess2:
+                if i in whrepl:
+                    print(i)
+                
+                    
+                    
+
+
+
+        def showpar():
+            global mainnum, gtext, cmb, mainstr
+            if combb.get != '':
+                print("Function: showpar...")
+                flagg = 'no'
+                inum = 0
+                cmb = combb.get()
+                for i in keys2:
+                    if cmb == i:
+                        mainnum = inum
+                        flagg = 'yes'
+                    inum +=1
+                if flagg == 'yes':
+                    gtext.delete(1.0,END)
+                    mainstr = valuess2[mainnum].replace('"','')
+                    #mainstr.replace('\n', '')
+                    gtext.insert(END, mainstr)
+                    
+                else:
+                    messagebox.showerror("Widget manager", "You didn't choose what you want to change.")
+            else:
+                messagebox.showerror("Widget manager", "You didn't write anything.")
+            
         def befwidgetman():
-
             print("Function widgetman...")
+            global cctime, plus
             flag = ''
             try:
                 if eget:
-                    pass
+                    pass    
             except:
                 NameError
                 if NameError:
@@ -220,16 +358,49 @@ try:
                 btc2.place(x=10, y=36)
                 Languages = ttk.Combobox(root, values=['english', 'russian'], width=10)
                 Languages.place(x=300,y=37)
-        
+            
 
 
         def infowid():
             pass
 
+        def dictch():
+            global dictiong, valuess2, keys2
+            dictiong = {}
+            for i in cs:
+                if ec3get in i:
+                    keyg = re.search('"\S*"', i)
+                    if keyg:
+                        keyg = keyg[0]
+                        changeg = i[len(keyg)+1:]
+                        mentiong = re.search('"\D*"', changeg)
+                        if mentiong:
+                            mentiong = mentiong[0]
+                            allstrokes.append(i)
+                            if mentiong and keyg:
+                                dictiong[keyg] = mentiong
+                    
+                keys2, valuess2 = [], []
+                for key in dictiong.keys():
+                    keys2.append(key)
+                for value in dictiong.values():
+                    valuess2.append(value)
+        
+        def restwid():
+            global dictiong, valuess2, keys2
+            try:
+                dictch()
+                namt = 'files/csgo_' + lang + '.txt'
+                shutil.copy2(namt, plus)
+                messagebox.showinfo("Widget manager", "Successfully restored.")
+            except:
+                messagebox.showinfo("Widget manager.", "Nothing to restore.")
+            
 
 
         def widgetmain():
-            global allnice, lang, plus, ec3
+            print("Function widgetmain...")
+            global allnice, lang, plus, ec3, gtext, onetime, combbs, cctime
             lang = Languages.get()
             
             allnice = ''
@@ -241,24 +412,19 @@ try:
                 for widget in root.winfo_children():
                     widget.destroy() 
                 btc3 = ttk.Button(root, text="→", width=2, command=sete3get)
-                btc3.place(x=20, y=188)
-                btc4 = ttk.Button(root, text="Change")
+                btc3.place(x=20, y=228)
+                btc4 = ttk.Button(root, text="Change", command=widchange)
                 btc4.place(x=350, y=230)
-                btc5 = ttk.Button(root, text="Restore to default")
+                btc5 = ttk.Button(root, text="Restore to default", command=restwid)
                 btc5.place(x=200, y=230)
                 btc6 = ttk.Button(root, text="<", command=back, width=2)
                 btc6.place(x=0, y=0)
-                btokaz = ttk.Button(root, text="OK", command=back, width=3)
-                btokaz.place(x=450, y=230)
                 ec3 = ttk.Entry(root, width=12)
-                ec3.place(x=60, y=200)
-                ctext = Text(root, width=40, height=1, relief="flat")
-                ctext.place(x=190, y=50)
-                gtext = Text(root, width=40, height=7, relief="flat")
-                gtext.place(x=190, y=90)
-                #cvar = yp + " options:"
-                #ctext.insert('1.0', ypvar)
-                #ctext.config(state=DISABLED)
+                ec3.place(x=60, y=230)
+                gtext = Text(root, width=50, height=7, relief="flat")
+                gtext.place(x=50, y=90)
+                combbs = ttk.Combobox(root, width=50)
+                combbs.place(x=60,y=50)
             else:
                 messagebox.showerror("Widget manager", "You didn't choose the language.")
         befwidgetman()
@@ -267,8 +433,13 @@ try:
     
     def hellowind():
         print("Function: hellowind...")
+
         
-        global texter, bta, btb, yp, e2, text5, egetm,  eget, btok
+        
+
+        global texter, bta, btb, yp, e2, text5, egetm,  eget, btok, timert
+
+        timert = 0
         texter = Text(root, width=52, height=7, relief="flat")
         texter.place(x=50, y=50)
         texter.insert("1.0","Hey! This programm help you to manage your csgo. ")
@@ -307,7 +478,7 @@ try:
 
     def main():
         print("Function: main...")
-        global CE, CEI, diction, keys, bt3, bt4, bt5, bt6, yptext, yp, valuess, witp, valofyp, alright
+        global CE, CEI, diction, keys, bt3, bt4, bt5, bt6, yptext, yp, valuess, witp, valofyp, alright, ggtime5, descnum, valuess, b
 
         alright = ''
         yp = CE.get()
@@ -315,38 +486,40 @@ try:
             'MP5-SD', 'MAC-10', 'P90', 'UMP-45', 'MP7', 'MP9', 'PP-19 Bison', 'XM1014', 'MAG-7', 'Nova', 'Sawed-Off', 'AUG', 'SG 556',
             'AK-47', 'M4A4', 'M4A1', 'FAMAS', 'Galil AR',
             'AWP', 'SCAR-20', 'G3SG1', 'SSG 08', 'M249', 'Negev', 'Hegrenade', 'Molotov', 'Incendiary grenade', 'Fake grenade', 'Snowball', 'Smoke grenade',
-            'Zeus']
+            'Zeus',  'C4', 'Knife','Tablet', 'Fists', 'Healthshot', 'Bumpine', 'Breachcharge', 'Shield', 'Cutters', 'Defuser']
         for i in valofyp:
-            if yp in i:
-                alright = 'ok'
+            if yp != '':
+                if yp in i:
+                    alright = 'ok'
         if alright != 'ok':
             messagebox.showerror("Weapon manager", "You didn't choose the weapon.")
         else:
             for widget in root.winfo_children():
                 widget.destroy()    
-            global descnum, valuess, b
-            #witp = eget + '\scripts\items\items_game.txt'
             with open(witp, "r", encoding="utf8") as f:
                 b = f.readlines()
                 diction = {}
                 for i in b:
                     if yp in i:
                         key = re.search('"\D*"', i)
-                        key = key[0]
-                        change = i[len(key)+1:]
-                        mention = re.search('"\S*"', change)
+                        if key:
+                            key = key[0]
+                            change = i[len(key)+1:]
+                            mention = re.search('"\S*"', change)
                         if mention and key:
                             mention = mention[0]
                             key = key.replace("\t", "").replace('"', "")
                             mention = mention.replace("\t", "").replace('"', "")
                             diction[key] = mention
-                #print("DICT:", diction)
-                #print("LENDICT:", len(diction))
+
                 keys, valuess = [], []
                 for key in diction.keys():
                     keys.append(key)
                 for value in diction.values():
                     valuess.append(value)
+
+            
+                
                 CEI = ttk.Combobox(root, values=keys, width=25)
                 CEI.place(x=90,y=55)
 
@@ -387,11 +560,30 @@ try:
             
                 
     def restore():
+        global diction, keys, valuess
         print("Function: restore...")
-        global ggtime
-        shutil.copy2('items_game.txt',  witp)
+        diction = {}
+        for i in b:
+            if yp in i:
+                key = re.search('"\D*"', i)
+                if key:
+                    key = key[0]
+                    change = i[len(key)+1:]
+                    mention = re.search('"\S*"', change)
+                    if mention and key:
+                        mention = mention[0]
+                        key = key.replace("\t", "").replace('"', "")
+                        mention = mention.replace("\t", "").replace('"', "")
+                        diction[key] = mention
+        shutil.copy2('files/items_game.txt',  witp)
         messagebox.showinfo("Weapon manager", "Sucessfully restored.")
-        ggtime -=1
+
+        keys, valuess = [], []
+        for key in diction.keys():
+            keys.append(key)
+        for value in diction.values():
+            valuess.append(value)
+
 
     def changing():
         print("Function: changing...")
@@ -415,30 +607,24 @@ try:
             tim = 0
             with open(witp, "r", encoding="utf8") as f1:
                 b = f1.readlines()
-                #print(b)
                 for i in b:
                     getin = '"' + CEI.get() + '"'
                     if getin in i:
                         if yp in i:
                             repl_stroke = i
-                            #print(repl_stroke)
-            
+
                 ots = re.findall('"\S*"', repl_stroke)
-                #print("1:", ots)
                 whatreaplce = re.findall('"\S*"', repl_stroke[len(ots[0])+1:])
                 whatreaplce = whatreaplce[0]
 
-                #print("WHAT",whatreaplce)
 
                 textget = text.get(1.0,END)
                 ntextget = re.findall('\S*', textget)
                 ntextget = ntextget[0]
                 ntextget = '"' + ntextget + '"'
 
-                #print("TEXTGET",ntextget)
 
                 new_repl_stroke = repl_stroke.replace(whatreaplce, ntextget)
-                #print(new_repl_stroke)
             
             with open(witp, "w", encoding="utf8") as f2:
                 for i in b:
@@ -451,20 +637,16 @@ try:
                     i = '"' + i + '"'
                     if getin in i:
                         ntextget = ntextget[1:len(ntextget)-1]
-                        #print("FIFIFIIFIFIF:", ntextget)
                         valuess[tim] = ntextget
                         
                     tim +=1
-                #print("KEYS:", keys)
-                #print("VALUESS:", valuess)
-                #print("GETIN:", getin)
         elif trigger == 'yes' and trigger2 == 'no':
             messagebox.showerror("Weapon manager", "You didn't choose the number to what you want to change. Put → and write mention what you want.")
 
 
     def back():
         print("Function: back...")
-        global texter, photo1, text5, e2, ggtime
+        global texter, photo1, text5, e2, btok, eget
         for widget in root.winfo_children():
             widget.destroy()
         bta =  ttk.Button(root, text='Weapon manager', command=beforehand)
@@ -473,6 +655,8 @@ try:
         btb.place(x=115, y=0)
         btc =  ttk.Button(root, text='Widget manager', command=widgetman)
         btc.place(x=235, y=0)
+        btok =  ttk.Button(root, text='OK', command=seteget, width=3)
+        btok.place(x=430, y=178)
         texter = Text(root, width=52, height=7, relief="flat")
         texter.place(x=50, y=50)
         texter.insert("1.0","Hey! This programm help you to manage your csgo. ")
@@ -480,7 +664,7 @@ try:
         texter.insert("3.0"," Weapon manager can change the damage, range, spread and many others specifications of guns. ")
         texter.insert("4.0","            Panorama switcher, switch the wallpaper of csgo.")
         e2 = ttk.Entry(root, width=12)
-        e2.place(x=390, y=180)
+        e2.place(x=340, y=180)
         text5 = Text(root, width=25, height=1, relief="flat")
         text5.place(x=50, y=180)
         text5.insert("1.0","Path to your csgo files.")
@@ -492,6 +676,7 @@ try:
                 e2.insert(0, 'C:\Program Files (x86)\Steam\steamapps\common\Counter-Strike Global Offensive\csgo')
 
     def beforehand():
+        global flag
         flag = ''
         try:
             if eget:
@@ -503,7 +688,7 @@ try:
                 flag = 'no'
         if flag != 'no': 
             print("Function: beforehand...")
-            global bt1, bt2, CE, ggtime,  witp, ggtime
+            global bt1, bt2, CE, witp
             witp = eget + '\scripts\items\items_game.txt'
             texter.destroy()
             e2.destroy()
@@ -517,22 +702,21 @@ try:
             'MP5-SD', 'MAC-10', 'P90', 'UMP-45', 'MP7', 'MP9', 'PP-19 Bison', 'XM1014', 'MAG-7', 'Nova', 'Sawed-Off', 'AUG', 'SG 556',
             'AK-47', 'M4A4', 'M4A1', 'FAMAS', 'Galil AR',
             'AWP', 'SCAR-20', 'G3SG1', 'SSG 08', 'M249', 'Negev', 'Hegrenade', 'Molotov', 'Incendiary grenade', 'Fake grenade', 'Snowball', 'Smoke grenade',
-            'Zeus'])
+            'Zeus',  'C4', 'Knife','Tablet', 'Fists', 'Healthshot', 'Bumpine', 'Breachcharge', 'Shield', 'Cutters', 'Defuser'])
             CE.place(x=300,y=37)
-            if ggtime == 0:
-                os.remove(witp)
-                witp2 = eget + '\scripts\items'
-                shutil.copy2('items_modiflied.txt',  witp2)
-                witp3 = eget + '\scripts\items\items_modiflied.txt'
-                os.rename(witp3, witp)
-                print("File copied.")
-                ggtime +=1
+            os.remove(witp)
+            witp2 = eget + '\scripts\items'
+            shutil.copy2('files\items_modiflied.txt',  witp2)
+            witp3 = eget + '\scripts\items\items_modiflied.txt'
+            os.rename(witp3, witp)
+            print("File copied.")
+              
         
     root = ThemedTk(theme="arc")
     root.title("CSGO Manager")
     root.resizable(False, False)
     root.geometry("550x300")
-    root.iconbitmap('ks.ico')
+    root.iconbitmap('files/ks.ico')
     hellowind()
 
 
