@@ -10,6 +10,7 @@ import shutil
 import random
 import os
 import logging
+import webbrowser
 
 logging.basicConfig(filename='logs.log', level=logging.DEBUG, 
                     format='%(asctime)s %(levelname)s %(name)s %(message)s')
@@ -202,6 +203,10 @@ try:
             if flagr != 'no':
                 if ec3get != '':
                     if len(ec3get) >=3:
+                        try:
+                            gtext.delete('1.0', END)
+                        except:
+                            pass
                         widshow()
                     else:
                         messagebox.showerror("Widget manager", "The argument is too short. Try word at least with 3 characters.")
@@ -257,16 +262,16 @@ try:
                 for value in dictiong.values():
                     valuess2.append(value)
 
-                    btc7 = ttk.Button(root, text="→", width=2, command=showpar)
-                    btc7.place(x=20, y=48)
+                    btc7 = ttk.Button(root, text="Choose: ", width=8, command=showpar)
+                    btc7.place(x=42, y=48)
                     combbs.destroy()
                     combb = ttk.Combobox(root, width=50, values=keys2)
-                    combb.place(x=60,y=50)
+                    combb.place(x=120,y=50)
                 
                 
         def widchange():
             print("Function widchange...")
-            global whrepl, wiwhrepl, realwhrepl, x, creadl, xstr, gkav
+            global whrepl, wiwhrepl, realwhrepl, x, creadl, xstr, gkav, valuess2, keys2,cs85, dictiong
             for i in allstrokes:
                 if keys2[mainnum] in i and valuess2[mainnum] in i:
                     whrepl = i
@@ -297,13 +302,27 @@ try:
                         c2.write(i)
                     messagebox.showinfo("Widget manager", "Sucessfully changed!")
             
-            for i in valuess2:
-                if i in whrepl:
-                    print(i)
+            with open(plus, "r", encoding="utf-16") as c:
+                cs85 = c.readlines()
+                dictiong = {}
+                for i in cs85:
+                    if ec3get in i:
+                            keyg = re.search('"\S*"', i)
+                            if keyg:
+                                keyg = keyg[0]
+                                changeg = i[len(keyg)+1:]
+                                mentiong = re.search('"\D*"', changeg)
+                                if mentiong:
+                                    mentiong = mentiong[0]
+                                    allstrokes.append(i)
+                            if mentiong and keyg:
+                                dictiong[keyg] = mentiong
                 
-                    
-                    
-
+                keys2, valuess2 = [], []
+                for key in dictiong.keys():
+                    keys2.append(key)
+                for value in dictiong.values():
+                    valuess2.append(value)
 
 
         def showpar():
@@ -342,55 +361,63 @@ try:
                     messagebox.showerror("CSGO Manager", "CSGO folder not found. Check the path and try again.")
                     flag = 'no'
             if flag != 'no':
-                global Languages
+                global Languages, photogit, photovk, photoyoutube, photoweap, photowallp, photowidg
                 for widget in root.winfo_children():
                     widget.destroy()
+                photoweap = PhotoImage(file = r"files\photoweap.png")
+                photowallp = PhotoImage(file = r"files\photowallp.png")
+                photowidg = PhotoImage(file = r"files\photowidg.png")
                 
-                bta =  ttk.Button(root, text='Weapon manager', command=beforehand)
-                bta.place(x=0, y=0)
-                btb =  ttk.Button(root, text='Panorama switcher', command=panoraman)
-                btb.place(x=112, y=0)
-                btc =  ttk.Button(root, text='Widget manager', command=widgetman)
-                btc.place(x=235, y=0)
+
+                #bta =  ttk.Button(root, text='Weapon manager', command=beforehand)
+                #bta.place(x=0, y=0)
+                bta =  ttk.Button(root, image=photoweap, command=beforehand)
+                bta.place(x=0, y=0, width=60, height=35)
+                btb =  ttk.Button(root, image=photowallp, command=panoraman)
+                btb.place(x=65, y=0,width=46, height=35)
+                btc =  ttk.Button(root, image=photowidg, command=widgetman)
+                btc.place(x=115, y=0,width=46, height=35)
+        
+               
                 btc1 = ttk.Button(root, text='OK',  command=widgetmain)
-                btc1.place(x=450, y=36)
+                btc1.place(x=450, y=46)
                 btc2 = ttk.Button(root, text='Help', command=infowid)
-                btc2.place(x=10, y=36)
+                btc2.place(x=10, y=46)
                 Languages = ttk.Combobox(root, values=['english', 'russian'], width=10)
-                Languages.place(x=300,y=37)
+                Languages.place(x=350,y=47)
             
 
 
         def infowid():
             pass
 
-        def dictch():
+
+        
+        def restwid():
+            print("Function restwid...")
             global dictiong, valuess2, keys2
-            dictiong = {}
-            for i in cs:
-                if ec3get in i:
-                    keyg = re.search('"\S*"', i)
-                    if keyg:
-                        keyg = keyg[0]
-                        changeg = i[len(keyg)+1:]
-                        mentiong = re.search('"\D*"', changeg)
-                        if mentiong:
-                            mentiong = mentiong[0]
-                            allstrokes.append(i)
-                            if mentiong and keyg:
-                                dictiong[keyg] = mentiong
-                    
+            try:
+                dictiong = {}
+                for i in cs:
+                    if ec3get in i:
+                        keyg = re.search('"\S*"', i)
+                        if keyg:
+                            keyg = keyg[0]
+                            changeg = i[len(keyg)+1:]
+                            mentiong = re.search('"\D*"', changeg)
+                            if mentiong:
+                                mentiong = mentiong[0]
+                                allstrokes.append(i)
+                                if mentiong and keyg:
+                                    dictiong[keyg] = mentiong
+
                 keys2, valuess2 = [], []
                 for key in dictiong.keys():
                     keys2.append(key)
                 for value in dictiong.values():
                     valuess2.append(value)
-        
-        def restwid():
-            global dictiong, valuess2, keys2
-            try:
-                dictch()
                 namt = 'files/csgo_' + lang + '.txt'
+
                 shutil.copy2(namt, plus)
                 messagebox.showinfo("Widget manager", "Successfully restored.")
             except:
@@ -411,55 +438,82 @@ try:
             if allnice == 'ok':
                 for widget in root.winfo_children():
                     widget.destroy() 
-                btc3 = ttk.Button(root, text="→", width=2, command=sete3get)
-                btc3.place(x=20, y=228)
+                #→
+                btc3 = ttk.Button(root, text="Find:", width=5, command=sete3get)
+                btc3.place(x=40, y=228)
                 btc4 = ttk.Button(root, text="Change", command=widchange)
-                btc4.place(x=350, y=230)
+                btc4.place(x=390, y=230)
                 btc5 = ttk.Button(root, text="Restore to default", command=restwid)
-                btc5.place(x=200, y=230)
+                btc5.place(x=240, y=230)
                 btc6 = ttk.Button(root, text="<", command=back, width=2)
                 btc6.place(x=0, y=0)
                 ec3 = ttk.Entry(root, width=12)
-                ec3.place(x=60, y=230)
+                ec3.place(x=100, y=230)
                 gtext = Text(root, width=50, height=7, relief="flat")
                 gtext.place(x=50, y=90)
                 combbs = ttk.Combobox(root, width=50)
-                combbs.place(x=60,y=50)
+                combbs.place(x=120,y=50)
             else:
                 messagebox.showerror("Widget manager", "You didn't choose the language.")
         befwidgetman()
         
 
+    def redirectgit():
+        webbrowser.open('https://github.com/zeterm0d/csgomanager') 
+
+    def redirectvk():
+        webbrowser.open('https://vk.com/sointerestingperson') 
+
+    def redirectyoutube():
+        webbrowser.open('https://www.youtube.com/channel/UCzt_LknuF3hdIDmE7sg8MjA')
     
     def hellowind():
         print("Function: hellowind...")
 
         
-        
+        global texter, bta, btb, yp, e2, text5, egetm,  eget, btok, timert, photogit, photovk, photoyoutube,  photoweap, photowallp, photowidg
 
-        global texter, bta, btb, yp, e2, text5, egetm,  eget, btok, timert
+        photogit = PhotoImage(file = r"files\githublog.png")
+        photovk = PhotoImage(file = r"files\vklog.png")
+        photoyoutube = PhotoImage(file = r"files\youtubelog.png")
+        photoweap = PhotoImage(file = r"files\photoweap.png")
+        photowallp = PhotoImage(file = r"files\photowallp.png")
+        photowidg = PhotoImage(file = r"files\photowidg.png")
 
         timert = 0
-        texter = Text(root, width=52, height=7, relief="flat")
+        texter = Text(root, width=52, height=9, relief="flat")
         texter.place(x=50, y=50)
-        texter.insert("1.0","Hey! This programm help you to manage your csgo. ")
-        texter.insert("2.0","   Choose the option what you want, in buttons bellow.")
-        texter.insert("3.0"," Weapon manager can change the damage, range, spread and many others specifications of guns. ")
-        texter.insert("4.0","            Panorama switcher, switch the wallpaper of csgo.")
-        bta =  ttk.Button(root, text='Weapon manager', command=beforehand)
-        bta.place(x=0, y=0)
-        btb =  ttk.Button(root, text='Panorama switcher', command=panoraman)
-        btb.place(x=112, y=0)
-        btc =  ttk.Button(root, text='Widget manager', command=widgetman)
-        btc.place(x=235, y=0)
+        texter.insert("1.0","Hey! ⚙This is csgo manager.                       This programm help you to manage your csgo.\n")
+        texter.insert(END,"Choose the option what you want, in buttons bellow.\n")
+        texter.insert(END,"\n1. Weapon manager can change the damage, range,\nspread and many others specifications of guns. \n")
+        texter.insert(END,"2. Panorama switcher, switch the wallpaper of csgo.\n")
+        texter.insert(END,"3. Widget manager can change the names of different game modes and many other interesting labels.")
+        
+
+        #bta =  ttk.Button(root, text='Weapon manager', command=beforehand)
+        #bta.place(x=0, y=0)
+        bta =  ttk.Button(root, image=photoweap, command=beforehand)
+        bta.place(x=0, y=0, width=60, height=35)
+        btb =  ttk.Button(root, image=photowallp, command=panoraman)
+        btb.place(x=65, y=0,width=46, height=35)
+        btc =  ttk.Button(root, image=photowidg, command=widgetman)
+        btc.place(x=115, y=0,width=46, height=35)
+        
+        btgit = Button(root, text="", command=redirectgit, image=photogit, width=16, relief="flat", height=16, bg="white")
+        btgit.place(x=525, y=275)
+        btvk = Button(root, text="", command=redirectvk, image=photovk, width=16, relief="flat", height=16, bg="white")
+        btvk.place(x=500, y=275)
+        btyt = Button(root, text="git", command=redirectyoutube, image=photoyoutube, width=16, relief="flat", height=16, bg="white")
+        btyt.place(x=475, y=275)
+
         yp = ''
         e2 = ttk.Entry(root, width=12)
-        e2.place(x=340, y=180)
+        e2.place(x=340, y=211)
         e2.insert(END, 'C:\Program Files (x86)\Steam\steamapps\common\Counter-Strike Global Offensive\csgo')
         btok =  ttk.Button(root, text='OK', command=seteget, width=3)
-        btok.place(x=430, y=178)
+        btok.place(x=430, y=210)
         text5 = Text(root, width=25, height=1, relief="flat")
-        text5.place(x=50, y=180)
+        text5.place(x=50, y=210)
         text5.insert("1.0","Path to your csgo files.")
         
 
@@ -646,27 +700,51 @@ try:
 
     def back():
         print("Function: back...")
-        global texter, photo1, text5, e2, btok, eget
+        global texter, photo1, text5, e2, btok, eget, photogit, photovk, photoyoutube, photoweap, photowallp, photowidg
+
         for widget in root.winfo_children():
             widget.destroy()
-        bta =  ttk.Button(root, text='Weapon manager', command=beforehand)
-        bta.place(x=0, y=0)
-        btb =  ttk.Button(root, text='Panorama switcher', command=panoraman)
-        btb.place(x=115, y=0)
-        btc =  ttk.Button(root, text='Widget manager', command=widgetman)
-        btc.place(x=235, y=0)
-        btok =  ttk.Button(root, text='OK', command=seteget, width=3)
-        btok.place(x=430, y=178)
-        texter = Text(root, width=52, height=7, relief="flat")
+        photogit = PhotoImage(file = r"files\githublog.png")
+        photovk = PhotoImage(file = r"files\vklog.png")
+        photoyoutube = PhotoImage(file = r"files\youtubelog.png")
+        photoweap = PhotoImage(file = r"files\photoweap.png")
+        photowallp = PhotoImage(file = r"files\photowallp.png")
+        photowidg = PhotoImage(file = r"files\photowidg.png")
+
+        timert = 0
+        texter = Text(root, width=52, height=9, relief="flat")
         texter.place(x=50, y=50)
-        texter.insert("1.0","Hey! This programm help you to manage your csgo. ")
-        texter.insert("2.0","   Choose the option what you want, in buttons bellow.")
-        texter.insert("3.0"," Weapon manager can change the damage, range, spread and many others specifications of guns. ")
-        texter.insert("4.0","            Panorama switcher, switch the wallpaper of csgo.")
+        texter.insert("1.0","Hey! ⚙This is csgo manager.                       This programm help you to manage your csgo.\n")
+        texter.insert(END,"Choose the option what you want, in buttons bellow.\n")
+        texter.insert(END,"\n1. Weapon manager can change the damage, range,\nspread and many others specifications of guns. \n")
+        texter.insert(END,"2. Panorama switcher, switch the wallpaper of csgo.\n")
+        texter.insert(END,"3. Widget manager can change the names of different game modes and many other interesting labels.")
+        
+
+        #bta =  ttk.Button(root, text='Weapon manager', command=beforehand)
+        #bta.place(x=0, y=0)
+        bta =  ttk.Button(root, image=photoweap, command=beforehand)
+        bta.place(x=0, y=0, width=60, height=35)
+        btb =  ttk.Button(root, image=photowallp, command=panoraman)
+        btb.place(x=65, y=0,width=46, height=35)
+        btc =  ttk.Button(root, image=photowidg, command=widgetman)
+        btc.place(x=115, y=0,width=46, height=35)
+        
+        btgit = Button(root, text="", command=redirectgit, image=photogit, width=16, relief="flat", height=16, bg="white")
+        btgit.place(x=525, y=275)
+        btvk = Button(root, text="", command=redirectvk, image=photovk, width=16, relief="flat", height=16, bg="white")
+        btvk.place(x=500, y=275)
+        btyt = Button(root, text="git", command=redirectyoutube, image=photoyoutube, width=16, relief="flat", height=16, bg="white")
+        btyt.place(x=475, y=275)
+
+        yp = ''
         e2 = ttk.Entry(root, width=12)
-        e2.place(x=340, y=180)
+        e2.place(x=340, y=211)
+        e2.insert(END, 'C:\Program Files (x86)\Steam\steamapps\common\Counter-Strike Global Offensive\csgo')
+        btok =  ttk.Button(root, text='OK', command=seteget, width=3)
+        btok.place(x=430, y=210)
         text5 = Text(root, width=25, height=1, relief="flat")
-        text5.place(x=50, y=180)
+        text5.place(x=50, y=210)
         text5.insert("1.0","Path to your csgo files.")
         try:
             e2.insert(0, eget)
@@ -688,22 +766,28 @@ try:
                 flag = 'no'
         if flag != 'no': 
             print("Function: beforehand...")
-            global bt1, bt2, CE, witp
+            for widget in root.winfo_children():
+                widget.destroy()
+            global bt1, bt2, CE, witp, photowidg, photoweap, photowallp
             witp = eget + '\scripts\items\items_game.txt'
-            texter.destroy()
-            e2.destroy()
-            text5.destroy()
-            btok.destroy()
+            
+
+            bta =  ttk.Button(root, image=photoweap, command=beforehand)
+            bta.place(x=0, y=0, width=60, height=35)
+            btb =  ttk.Button(root, image=photowallp, command=panoraman)
+            btb.place(x=65, y=0,width=46, height=35)
+            btc =  ttk.Button(root, image=photowidg, command=widgetman)
+            btc.place(x=115, y=0,width=46, height=35)
             bt1 = ttk.Button(root, text='OK',  command=main)
-            bt1.place(x=450, y=36)
+            bt1.place(x=450, y=46)
             bt2 = ttk.Button(root, text='Help', command=info)
-            bt2.place(x=10, y=36)
+            bt2.place(x=10, y=46)
             CE = ttk.Combobox(root, values=['Desert Eagle', 'Dual Berettas', 'Five-SeveN', 'Glock-18', 'CZ75', 'P250', 'P2000', 'Revolver R8', 'Tec-9', 'USP-S',
             'MP5-SD', 'MAC-10', 'P90', 'UMP-45', 'MP7', 'MP9', 'PP-19 Bison', 'XM1014', 'MAG-7', 'Nova', 'Sawed-Off', 'AUG', 'SG 556',
             'AK-47', 'M4A4', 'M4A1', 'FAMAS', 'Galil AR',
             'AWP', 'SCAR-20', 'G3SG1', 'SSG 08', 'M249', 'Negev', 'Hegrenade', 'Molotov', 'Incendiary grenade', 'Fake grenade', 'Snowball', 'Smoke grenade',
             'Zeus',  'C4', 'Knife','Tablet', 'Fists', 'Healthshot', 'Bumpine', 'Breachcharge', 'Shield', 'Cutters', 'Defuser'])
-            CE.place(x=300,y=37)
+            CE.place(x=300,y=47)
             os.remove(witp)
             witp2 = eget + '\scripts\items'
             shutil.copy2('files\items_modiflied.txt',  witp2)

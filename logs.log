@@ -1,3 +1,13 @@
 2020-03-03 16:46:03,379 ERROR __main__ name 'widgetman' is not defined
 2020-03-03 18:42:07,221 ERROR __main__ name 'befwidgetman' is not defined
 2020-03-03 18:42:47,764 ERROR __main__ name 'befwidgetman' is not defined
+2020-03-13 09:34:15,275 ERROR __main__ unknown option "-iamge"
+2020-03-13 09:39:11,670 ERROR __main__ unknown option "-height"
+2020-03-13 10:32:02,141 ERROR __main__ couldn't open "filesklog.png": no such file or directory
+2020-03-13 10:32:29,126 ERROR __main__ couldn't open "filesklog.png": no such file or directory
+2020-03-13 13:58:23,617 ERROR __main__ unknown option "-bg"
+2020-03-13 13:58:52,272 ERROR __main__ unknown option "-height"
+2020-03-13 13:59:50,303 ERROR __main__ unknown option "-height"
+2020-03-13 14:00:49,384 ERROR __main__ unknown option "-relief"
+2020-03-13 14:01:04,703 ERROR __main__ unknown option "-relief"
+2020-03-13 14:42:23,084 ERROR __main__ name 'image' is not defined
