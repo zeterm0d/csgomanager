@@ -20,7 +20,180 @@ logger=logging.getLogger(__name__)
 
 try:
     ggtime, cctime, bks, stater  = 0, 0, 0, ""
-    
+    #Models manager
+    def modelman(): 
+        flag = ''
+        try:
+            if eget:
+                pass
+        except:
+            NameError
+            if NameError:
+                messagebox.showerror("CSGO Manager", "CSGO folder not found. Check the path and try again.")
+                flag = 'no'
+        if flag != 'no': 
+            def befmodels():
+
+                print("Function befmodels...")
+                global ecd, ecd1, dirpath
+
+                dirpath = eget + r'\\' + 'pak01_dir.vpk'
+                try:
+                    open("files\pak01_dir.vpk", errors="ignore", encoding="utf-16")
+                except:
+                    shutil.copy2(dirpath, r"files\\")
+                    print("Models backup created.")
+
+                lst = [r'sg556', r'awp']
+
+                for widget in root.winfo_children():
+                    widget.destroy()
+                
+                btd = ttk.Button(root, text="<", command=back, width=2)
+                btd.place(x=0, y=0)
+                ecd = ttk.Entry(root, width=40)
+                ecd.place(x=100, y=50)
+                ecd1 = ttk.Combobox(root, values=lst,width=50)
+                ecd1.place(x=110, y=100)
+                btd2 = ttk.Button(root, text="Select file", command=selectf)
+                btd2.place(x=355, y=49)
+                btd3 = ttk.Button(root, text="Install", command=skininst)
+                btd3.place(x=355, y=250)
+                btd3 = ttk.Button(root, text="Restore to default.", command=restoremod)
+                btd3.place(x=230, y=250)
+            
+
+            def restoremod():
+                shutil.copy2("files\pak01_dir.vpk", eget + r"\\")
+                messagebox.showinfo("Models manager", "Successfully restored!")
+
+
+            def selectf():
+                print("Function selectf...")
+                global DA, mitp, fileName, dirpath
+                DA = root.directory = filedialog.askopenfilename(title = "Select file",filetypes = (("Texture file","*.vtf"),))
+                ecd.delete(0, END)
+                try:
+                    if DA:
+                        ecd.insert(END, DA)
+                        mitp  = eget + r'\materials\models\weapons'
+                        fileName = os.path.basename(DA)
+                    else:
+                        messagebox.showerror("Models manager", "You didn't choose the file.")
+                except:
+                   pass
+            
+            def skininst():
+                print("Function skininst...")
+                global MODname, lstweap, dred, D2, D
+                lstweap = ['pist_', 'shot_', 'mach_', 'smg_', 'snip_', 'rif_']
+                try:
+                    if ecd1.get() != '':
+                        MODname = ecd1.get()
+                    else:
+                        messagebox.showerror("Models manager", "You didn't choose the weapon.")
+                except:
+                    pass
+                with open(dirpath, "r",encoding='utf-8', errors='ignore') as D:
+                    dred = D.readlines()
+                    dredfull = D.readlines()
+                for i in lstweap:
+                    for a in dred:
+                        sm =  i + MODname
+                        if sm in a:
+                            wprefix = i
+                try:
+                    if wprefix:
+                        pass
+                except:
+                    messagebox.showerror("Models manager", "Your csgo files are broken. Try to restore it.")
+                for i in dred:
+                    wmod1 = 'w_models\\' + 'w_' + wprefix + MODname
+                    if wmod1 in i:
+                        iback1 = i
+                        spaces1 = re.search("\s*", i)
+                        spaces1 = spaces1[0]
+                        ots1 = re.search('"\S*"', i)
+                        ots1 = ots1[0]
+                        ch1 = i[len(ots1)+2:]
+                        ch1 = ch1.replace('\n', '').replace('\t', '')
+                        wht = ch1
+                        if re.search('_exponent', ch1):
+                            ch1 = ch1[:len(ch1)-10]
+                            ch1 = ch1 + '1' + '_exponent"'
+                            newmodstr1 = ots1 + ch1
+                        else:
+                            wht = wht.replace('\n', '').replace('\t', '')
+                            wht = wht[:len(wht)-1]
+                            wht = wht + '1' + '"'
+                            newmodstr1 = ots1  + wht
+                            
+                        
+                        with open(dirpath, "w",encoding='utf-8') as D2, open(dirpath, "r",encoding='utf-8') as D3:
+                            lastat = D3.read()
+                            for i in lastat:
+                                if iback1 in i:
+                                    if re.search(r'//"', iback1):
+                                        i =  spaces1 + r"//" + newmodstr1
+                                    else:
+                                        i = spaces1 + newmodstr1
+                            D2.write(lastat)
+                for i in dred:
+                    wmod2 = 'v_models\\' + wprefix + MODname
+                    if wmod2 in i:
+                        iback2 = i
+                        spaces2 = re.search("\s*", i)
+                        spaces2 = spaces2[0]
+                        ots2 = re.search('"\S*"', i)
+                        ots2 = ots2[0]
+                        ots2 = ots2.replace('\n', '').replace('\t', '')
+                        ch2 = i[len(ots2)+1:].replace('"', '').replace(' ', '')
+                        ch2 = ch2.replace('\n', '').replace('\t', '')
+                        ch2 = '"' + ch2 + '"'
+                        wht1 = ch2
+                        if re.search('_exponent', ch2):
+                            ch2 = ch2[:len(ch2)-10]
+                            ch2 = ch2 + '1' + '_exponent"'
+                            newmodstr2 = ots2 + ' ' + ch2
+                        else:
+                            wht1 = wht1[:len(wht1)-1]
+                            wht1 = wht1 + '1' + '"'
+                            newmodstr2 = ots2 + ' ' + wht1
+                        
+                        with open(dirpath, "w",encoding='utf-8', errors='ignore') as D2, open(dirpath, "r",encoding='utf-8', errors='ignore') as D3:
+                            lastat = D3.read()
+                            for i in lastat:
+                                if iback2 in i:
+                                    if re.search(r'//"', iback2):
+                                        i =  spaces2 + r"//" + newmodstr2
+                                    else:
+                                        i = spaces2 + newmodstr2
+                            D2.write(lastat)
+                                        
+                try:
+                    shutil.rmtree(mitp + r'\w_models\w_' + wprefix + MODname)
+                    shutil.rmtree(mitp + r'\v_models\\' + wprefix + MODname)
+                except:
+                    pass
+                #W - weapons\w_models\w_*weaponprefix*_*nameofweap*\(*weaponprefix*)_*nameofweap*
+
+                os.mkdir(mitp + r'\w_models\w_' + wprefix + MODname)
+                modcopy1 = mitp + r'\w_models\w_' + wprefix + MODname + r'\\' + MODname + '1' + '.vtf'
+                shutil.copy2(DA, modcopy1)
+
+                #V - weapons\v_models\*weaponprefix*_*nameofweap*\(*weaponprefix*)_*nameofweap*
+
+                os.mkdir(mitp + r'\v_models\\' + wprefix + MODname)
+                modcopy2 = mitp + r'\v_models\\' + wprefix + MODname + r'\\' + MODname + '1' + '.vtf'
+                shutil.copy2(DA, modcopy2)
+                print("Files successfully copied.")
+
+                
+                messagebox.showinfo("Models manager", "Sucessfully installed!")
+            befmodels()
+
+
+
     #Panorama Switcher
     def panoraman():
         flag = ''
@@ -44,7 +217,7 @@ try:
                 try:
                     flag2 = True
                     print("Function: opnr1...")
-                    A = root.directory = filedialog.askopenfilename()
+                    A = root.directory = filedialog.askopenfilename(title = "Select file",filetypes = (("Panorama file","*.webm"),))
                     checkform = re.findall(r"\.\S*", A)
                     if checkform[0] != '.webm':
                         messagebox.showerror("Panorama switcher","Invalid file type. Please chooose .webm file.")
@@ -58,7 +231,7 @@ try:
                 global checkform, B, flag3
                 try:
                     flag3 = True
-                    B = root.directory = filedialog.askopenfilename()
+                    B = root.directory = filedialog.askopenfilename(title = "Select file",filetypes = (("Panorama file","*.webm"),))
                     checkform = re.findall(r"\.\S*", B)
                     if checkform[0] != '.webm':
                         messagebox.showerror("Panorama switcher","Invalid file type. Please chooose .webm file.")
@@ -72,7 +245,7 @@ try:
                 global checkform, C, flag4
                 try:
                     flag4 = True
-                    C = root.directory = filedialog.askopenfilename()
+                    C = root.directory = filedialog.askopenfilename(title = "Select file",filetypes = (("Panorama file","*.webm"),))
                     checkform = re.findall(r"\.\S*", C)
                     if checkform[0] != '.webm':
                         messagebox.showerror("Panorama switcher","Invalid file type. Please chooose .webm file.")
@@ -498,6 +671,9 @@ try:
         btb.place(x=65, y=0,width=46, height=35)
         btc =  ttk.Button(root, image=photowidg, command=widgetman)
         btc.place(x=115, y=0,width=46, height=35)
+
+        btd =  ttk.Button(root, text="MM", command=modelman)
+        btd.place(x=180, y=0,width=46, height=35)
         
         btgit = Button(root, text="", command=redirectgit, image=photogit, width=16, relief="flat", height=16, bg="white")
         btgit.place(x=525, y=275)
