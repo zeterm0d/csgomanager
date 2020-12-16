@@ -8,7 +8,6 @@ Current features:
 4. Replace different kinds of ingame models to get custom skins. (Find this models you can at "gamebanana.com")
 ### Donate!
 Support me:
-###Qiwi
 <noscript><a href="https://qiwi.com/p/37122151508 ">
 <img alt="Donate using Liberapay" src="https://static.qiwi.com/img/providers/logoBig/99_l.png"></a></noscript>
 
