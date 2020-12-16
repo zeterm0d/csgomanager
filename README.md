@@ -1,6 +1,6 @@
 # CSGO Manager beta v0.5
 ## Author: github.com/zeterm0d
-Hi there! This program may help you to manage your csgo files.
+Hey! This program may help you to manage your csgo files.
 Current features:
 1. Change wallpaper (panorama) of csgo.
 2. Manage your weapons parameters such as damage, clip size, etc. 
