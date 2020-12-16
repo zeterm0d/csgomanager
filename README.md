@@ -1,9 +1,11 @@
 # CSGO Manager beta v0.5
 ## Author: github.com/zeterm0d
-Hey! This program may help you to manage your csgo files.
-1. It can change the panorama(wallpaper) of your csgo.
-2. You can manage your weapons parameters, change and update it. 
-3. Lobby is boring for you? No problem, because my program can change each label in the lobby or text in each place in csgo.
+Hi there! This program may help you to manage your csgo files.
+Current features:
+1. Change wallpaper (panorama) of csgo.
+2. Manage your weapons parameters such as damage, clip size, etc. 
+3. Edit how to displayed lobby labels and buttons such as "Play" button, "Stop" button, etc. 
+4. Replace different kinds of ingame models to get custom skins. (Find this models you can at "gamebanana.com")
 ### Donate!
 Support me:
 ###Qiwi
